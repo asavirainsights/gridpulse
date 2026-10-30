@@ -1,0 +1,60 @@
+
+=== 1. Rows and meters ===
+ total_rows  meters
+    1402560      10
+
+=== 2. Null, negative and non-numeric meter values ===
+ null_values  negative  non_numeric
+           0         0            0
+
+=== 3. Duplicate (timestamp, meter) pairs ===
+ duplicate_groups
+                0
+
+=== 4. Zero readings per meter and first non-zero reading ===
+meter_id  total_rows  zero_rows  zero_pct       first_nonzero
+  MT_001      140256      40743      29.0 2012-01-01 00:15:00
+  MT_002      140256      35044      25.0 2012-01-01 00:15:00
+  MT_003      140256      35650      25.4 2012-01-01 00:15:00
+  MT_004      140256      35053      25.0 2012-01-01 00:15:00
+  MT_005      140256      35052      25.0 2012-01-01 00:15:00
+  MT_006      140256      35052      25.0 2012-01-01 00:15:00
+  MT_007      140256      35053      25.0 2012-01-01 00:15:00
+  MT_008      140256      35053      25.0 2012-01-01 00:15:00
+  MT_009      140256      35055      25.0 2012-01-01 00:15:00
+  MT_010      140256      35054      25.0 2012-01-01 00:15:00
+
+=== 5. Reading statistics (non-zero values, kW per 15 min) ===
+  min_kw  avg_kw  p99_kw     max_kw
+0.565291   75.97   346.8 552.188552
+
+=== 6. Average demand by hour of day (the daily curve) ===
+ hour  avg_kw
+  0.0    72.2
+  1.0    63.9
+  2.0    58.5
+  3.0    57.3
+  4.0    55.3
+  5.0    55.3
+  6.0    52.4
+  7.0    58.7
+  8.0    68.2
+  9.0    75.4
+ 10.0    79.7
+ 11.0    82.8
+ 12.0    86.6
+ 13.0    78.0
+ 14.0    76.7
+ 15.0    75.4
+ 16.0    74.1
+ 17.0    76.6
+ 18.0    88.5
+ 19.0   103.4
+ 20.0   105.4
+ 21.0   100.2
+ 22.0    94.9
+ 23.0    84.1
+
+=== 7. Weather: missing values and ranges ===
+ weather_rows  missing_temp  missing_radiation  min_temp  max_temp  max_radiation
+        35064             0                  0       1.9      37.8         1005.0
