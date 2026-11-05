@@ -1,0 +1,31 @@
+
+=== Model results (raw quantile bands) ===
+                   variant split  MAE_P50  peak_MAE  under10_%  avg_pinball  coverage_%  band_width
+              A no weather valid    34.57     46.39       4.14        11.01       80.02      113.19
+              A no weather  test    32.89     44.76       2.76        10.52       77.83      103.53
+B perfect weather forecast valid    34.21     46.17       3.89        10.86       80.32      112.85
+B perfect weather forecast  test    32.96     45.07       3.08        10.58       78.12      102.43
+  C noisy weather forecast valid    34.52     47.01       3.96        10.97       79.70      113.06
+  C noisy weather forecast  test    32.93     44.91       3.17        10.58       78.08      103.27
+
+=== Best baseline to beat ===
+split  MAE  peak_MAE  under10_%
+valid 43.0      60.9        5.5
+ test 43.9      65.0        7.0
+
+Champion: C noisy weather forecast
+test coverage of P10-P90 band, raw       :  78.1%  (target 80%), width  103.3 kWh
+test coverage of P10-P90 band, calibrated:  78.4%  (target 80%), width  103.7 kWh
+conformal shift applied: +0.2 kWh
+
+Top features for the P50 model (% of gain):
+lag_168          52.3
+lag_24           21.3
+lag_48            7.1
+hour_local        4.5
+dow_local         4.1
+roll_mean_168     1.8
+temperature_c     1.6
+roll_mean_24      1.6
+
+wrote 8,760 rows to gold.demand_forecast and saved models
