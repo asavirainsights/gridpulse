@@ -1,0 +1,9 @@
+split,baseline,MAE,RMSE,MAPE_%,peak_MAE,bias,under10_%
+valid,same hour yesterday,51.4,74.0,6.9,72.2,1.4,10.0
+valid,same hour last week,50.0,69.8,6.6,71.2,9.2,7.5
+valid,average of 3 days,43.0,58.5,5.8,60.9,4.7,5.5
+valid,hour-of-week profile,94.0,120.6,12.1,197.0,0.9,23.8
+test,same hour yesterday,52.3,75.0,7.0,76.6,-1.3,10.1
+test,same hour last week,49.9,67.4,6.6,65.8,-8.8,11.8
+test,average of 3 days,43.9,60.0,5.8,65.0,-4.4,7.0
+test,hour-of-week profile,74.9,102.5,9.5,157.3,-2.3,18.3
