@@ -1,0 +1,7 @@
+policy,total_cost_eur,energy_eur,peak_charge_eur,wear_eur,avg_daily_peak_kw,discharged_kwh,cost_saved_%,peak_cut_%,cycles_per_day
+1 no battery,546426.21,466999.61,79426.59,0.0,1079.17,0.0,0.0,0.0,0.0
+2 simple rule,520130.81,433020.06,83135.89,3974.86,1129.56,188522.34,4.81,-4.67,0.85
+3 optimizer + naive forecast,518004.53,441974.4,72777.3,3252.82,988.82,154081.07,5.2,8.37,0.7
+4 optimizer + ML forecast (P50),517903.03,442171.33,72506.51,3225.19,985.14,152772.31,5.22,8.71,0.69
+5 optimizer + ML cautious (P90/P10),517635.18,441696.46,72651.88,3286.84,987.12,155692.43,5.27,8.53,0.71
+6 optimizer + perfect foresight,515091.43,442002.03,69827.02,3262.38,948.74,154533.72,5.73,12.09,0.7
