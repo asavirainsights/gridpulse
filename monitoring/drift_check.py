@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
+from drift_stats import psi
 
 load_dotenv()
 engine = create_engine(os.environ["DATABASE_URL"])
@@ -17,18 +18,6 @@ ERROR_RATIO_ALERT = 1.30         # monthly error vs validation error
 COVERAGE_RANGE = (70.0, 90.0)    # acceptable share of hours inside P10-P90
 TRIGGER_FEATURES = ["demand_kwh", "lag_168"]        # can trigger retraining
 INFO_FEATURES = ["temperature_c", "radiation_wm2"]  # shown for information only
-
-
-def psi(reference, current, bins=10):
-    """Population Stability Index between a reference and a current sample."""
-    edges = np.quantile(reference, np.linspace(0, 1, bins + 1))
-    edges[0], edges[-1] = -np.inf, np.inf
-    edges = np.unique(edges)
-    ref_p = np.histogram(reference, edges)[0] / len(reference)
-    cur_p = np.histogram(current, edges)[0] / len(current)
-    ref_p = np.clip(ref_p, 1e-4, None)
-    cur_p = np.clip(cur_p, 1e-4, None)
-    return float(np.sum((cur_p - ref_p) * np.log(cur_p / ref_p)))
 
 
 def evaluate(label, ref, cur, ref_mape):
