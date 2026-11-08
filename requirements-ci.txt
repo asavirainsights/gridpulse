@@ -1,0 +1,7 @@
+numpy
+pandas
+pulp
+python-dotenv
+sqlalchemy
+pytest
+ruff
