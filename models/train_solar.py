@@ -146,3 +146,35 @@ with open("models/artifacts/solar_meta.json", "w") as f:
     json.dump({"features": FEATURES, "conformal_shift_kwh": shift,
                "quantiles": QUANTILES}, f, indent=2)
 print(f"\nwrote {len(fc):,} rows to gold.solar_forecast and saved models")
+# ---- experiment tracking with MLflow -------------------------------------------
+import mlflow
+import mlflow.lightgbm
+from mlflow import MlflowClient
+
+mlflow.set_tracking_uri("sqlite:///mlflow.db")
+mlflow.set_experiment("gridpulse-solar")
+client = MlflowClient()
+
+with mlflow.start_run(run_name="solar quantile model"):
+    mlflow.log_param("features", ",".join(FEATURES))
+    mlflow.log_metric("conformal_shift_kwh", float(shift))
+    for r in rows:
+        if r["method"].startswith("LightGBM"):
+            tag = "model"
+        else:
+            tag = "naive_" + r["method"].split(": ")[1].replace(" ", "_")
+        for key, value in r.items():
+            if key in ("method", "split"):
+                continue
+            name = f"{tag}_{r['split']}_{key}".replace("%", "pct")
+            mlflow.log_metric(name, float(value))
+    for a, model in models.items():
+        reg_name = f"gridpulse-solar-q{int(a * 100)}"
+        mlflow.lightgbm.log_model(model.booster_,
+                                  artifact_path=f"model_q{int(a * 100)}",
+                                  registered_model_name=reg_name)
+        versions = client.search_model_versions(f"name='{reg_name}'")
+        latest = max(int(v.version) for v in versions)
+        client.set_registered_model_alias(reg_name, "champion", latest)
+
+print("\nlogged the solar run and registered the models in MLflow")

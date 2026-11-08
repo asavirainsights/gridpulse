@@ -4,3 +4,5 @@ __pycache__/
 .env
 models/artifacts/
 models/artifacts/
+mlflow.db
+mlruns/

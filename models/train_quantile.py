@@ -157,3 +157,35 @@ with open("models/artifacts/demand_meta.json", "w") as f:
     json.dump({"champion": champion, "features": features,
                "conformal_shift_kwh": shift, "quantiles": QUANTILES}, f, indent=2)
 print(f"\nwrote {len(fc):,} rows to gold.demand_forecast and saved models")
+# ---- experiment tracking with MLflow -------------------------------------------
+import mlflow
+import mlflow.lightgbm
+from mlflow import MlflowClient
+
+mlflow.set_tracking_uri("sqlite:///mlflow.db")
+mlflow.set_experiment("gridpulse-demand")
+client = MlflowClient()
+METRICS = ["MAE_P50", "peak_MAE", "under10_%", "avg_pinball", "coverage_%", "band_width"]
+
+for variant, feats in VARIANTS.items():
+    with mlflow.start_run(run_name=variant):
+        mlflow.log_param("variant", variant)
+        mlflow.log_param("features", ",".join(feats))
+        mlflow.log_param("is_champion", variant == champion)
+        for _, r in res[res["variant"] == variant].iterrows():
+            for m in METRICS:
+                mlflow.log_metric(f"{r['split']}_{m.replace('%', 'pct')}", float(r[m]))
+        if variant == champion:
+            mlflow.log_metric("conformal_shift_kwh", float(shift))
+            mlflow.log_artifact("docs/baseline_results.csv")
+            mlflow.log_artifact("models/artifacts/demand_meta.json")
+            for a, model in fitted[champion].items():
+                reg_name = f"gridpulse-demand-q{int(a * 100)}"
+                mlflow.lightgbm.log_model(model.booster_,
+                                          artifact_path=f"model_q{int(a * 100)}",
+                                          registered_model_name=reg_name)
+                versions = client.search_model_versions(f"name='{reg_name}'")
+                latest = max(int(v.version) for v in versions)
+                client.set_registered_model_alias(reg_name, "champion", latest)
+
+print("\nlogged runs and registered the champion demand models in MLflow")
