@@ -8,3 +8,5 @@ mlflow.db
 mlruns/
 .pytest_cache/
 .ruff_cache/
+.pytest_cache/
+.ruff_cache/
