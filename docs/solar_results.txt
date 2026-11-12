@@ -1,0 +1,12 @@
+=== Solar results (daylight hours only) ===
+method                           split  MAE_P50  MAE_%_of_mean  bias   avg_pinball  coverage_%  band_width
+LightGBM P10/P50/P90             valid  27.96    19.82          8.50   8.91         72.47       81.22
+baseline: same hour yesterday    valid  32.85    23.29          -1.14  NaN          NaN         NaN
+baseline: average of 3 days      valid  29.38    20.83          -2.05  NaN          NaN         NaN
+LightGBM P10/P50/P90             test   20.68    15.01          4.67   6.71         73.77       63.17
+baseline: same hour yesterday    test   23.49    17.04          0.90   NaN          NaN         NaN
+baseline: average of 3 days      test   21.90    15.89          1.68   NaN          NaN         NaN
+
+test coverage of P10-P90 band, raw       : 73.8% (target 80%), width 63.2 kWh
+test coverage of P10-P90 band, calibrated: 83.2% (target 80%), width 67.9 kWh
+conformal shift applied: +2.5 kWh

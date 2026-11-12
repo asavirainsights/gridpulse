@@ -50,6 +50,11 @@ Electricity costs more in the evening peak, and large customers also pay for the
 | Hours under-forecast by more than 10% | 7.0% | 3.2% |
 | P10 to P90 coverage (target 80%) | n/a | 78.4% |
 
+| Solar, test period (daylight hours) | Best baseline (3-day average) | LightGBM |
+|---|---|---|
+| MAE (kWh per hour) | 21.90 | 20.68 |
+| P10 to P90 coverage (target 80%) | n/a | 83.2% after calibration (73.8% raw) |
+
 ## Battery scheduling
 
 A linear program (PuLP with CBC) plans each 24-hour window. It minimizes energy cost plus a daily peak charge plus a small wear cost, subject to battery capacity, reserve, power limit and energy balance, and the battery must end the day at least as full as it started. Surplus solar earns nothing.
