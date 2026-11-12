@@ -1,6 +1,6 @@
 numpy
 pandas
-pulp
+pulp<4
 python-dotenv
 sqlalchemy
 pytest
